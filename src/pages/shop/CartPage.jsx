@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react'
+/* eslint-disable no-unused-vars */
+import { useContext, useState } from 'react'
 import useCart from '../../hooks/useCart'
 import { FaTrash } from 'react-icons/fa'
 import Swal from 'sweetalert2'

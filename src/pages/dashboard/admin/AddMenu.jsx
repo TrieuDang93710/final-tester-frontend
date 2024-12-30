@@ -1,4 +1,4 @@
-import React from 'react'
+/* eslint-disable no-unused-vars */
 import { FaUtensils } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 

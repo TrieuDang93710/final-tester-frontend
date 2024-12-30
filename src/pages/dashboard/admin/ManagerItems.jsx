@@ -1,11 +1,9 @@
-import React from "react";
 import useMenu from "../../../hooks/useMenu";
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import Swal from "sweetalert2";
 
 function ManagerItems() {
-  const [menu, , refetch] = useMenu();
+  const [menu] = useMenu();
 
   return (
     <div className="w-full md:w-[870px] px-4 mx-auto">
