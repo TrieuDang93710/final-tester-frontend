@@ -1,23 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+/* eslint-disable react/prop-types */
+import { useEffect, useRef, useState } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import Card from '../../components/Card';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 function SpecailDishes() {
-  const [recipes, setRecipes] = useState([])
-  const slider = useRef(null)
+  const [recipes, setRecipes] = useState([]);
+  const slider = useRef(null);
   useEffect(() => {
+    fetch('/menu.json')
+      .then((res) => res.json())
+      .then((data) => {
+        const specials = data.filter((item) => item.category === 'popular');
+        // console.log(specials)
+        setRecipes(specials);
+      });
+  }, []);
 
-    fetch('/menu.json').then(res => res.json()).then(data => {
-      const specials = data.filter((item) => item.category === "popular");
-      // console.log(specials)
-      setRecipes(specials);
-    })
-  }, [])
-
-  {/** settings */ }
+  {
+    /** settings */
+  }
   const settings = {
     dots: true,
     infinite: true,
@@ -25,7 +29,7 @@ function SpecailDishes() {
     slidesToShow: 3,
     slidesToScroll: 3,
     nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+    prevArrow: <SamplePrevArrow />
   };
   return (
     <div className='section-container my-20 relative'>
@@ -33,33 +37,26 @@ function SpecailDishes() {
         <p className='subtitle'>Customer Favorites</p>
         <h2 className='title'>Popular Catagories</h2>
       </div>
-      <div className="md:absolute right-3 top-8 mb-10 md:mr-24">
-        <button onClick={() => slider?.current?.slickPrev()}
-          className=" btn p-2 rounded-full ml-5"
-        >
-          <FaAngleLeft className=" h-8 w-8 p-1" />
+      <div className='md:absolute right-3 top-8 mb-10 md:mr-24'>
+        <button onClick={() => slider?.current?.slickPrev()} className=' btn p-2 rounded-full ml-5'>
+          <FaAngleLeft className=' h-8 w-8 p-1' />
         </button>
-        <button
-          className="bg-green btn p-2 rounded-full ml-5"
-          onClick={() => slider?.current?.slickNext()}
-        >
-          <FaAngleRight className=" h-8 w-8 p-1" />
+        <button className='bg-green btn p-2 rounded-full ml-5' onClick={() => slider?.current?.slickNext()}>
+          <FaAngleRight className=' h-8 w-8 p-1' />
         </button>
       </div>
-      <Slider ref={slider} {...settings} className="overflow-hidden mt-10 space-x-5">
-        {recipes.map((item, index) => (<Card key={index} item={item} />))}
+      <Slider ref={slider} {...settings} className='overflow-hidden mt-10 space-x-5'>
+        {recipes.map((item, index) => (
+          <Card key={index} item={item} />
+        ))}
       </Slider>
     </div>
-  )
+  );
 }
 const SampleNextArrow = (props) => {
   const { className, style, onClick } = props;
   return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "red" }}
-      onClick={onClick}
-    >
+    <div className={className} style={{ ...style, display: 'block', background: 'red' }} onClick={onClick}>
       NEXT
     </div>
   );
@@ -68,14 +65,10 @@ const SampleNextArrow = (props) => {
 const SamplePrevArrow = (props) => {
   const { className, style, onClick } = props;
   return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "green" }}
-      onClick={onClick}
-    >
+    <div className={className} style={{ ...style, display: 'block', background: 'green' }} onClick={onClick}>
       BACK
     </div>
   );
 };
 
-export default SpecailDishes
+export default SpecailDishes;

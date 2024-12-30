@@ -1,5 +1,3 @@
-import React from 'react'
-
 function Categories() {
   return (
     <div className='section-container py-16'>

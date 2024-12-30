@@ -1,13 +1,11 @@
-import axios from 'axios'
-import React from 'react'
-
+import axios from 'axios';
 
 const axiosPublic = axios.create({
-  baseURL: 'http://localhost:8080',
-})
+  baseURL: 'http://localhost:8080'
+});
 
 const useAxiosPublic = () => {
-  return axiosPublic
-}
+  return axiosPublic;
+};
 
 export default useAxiosPublic;
