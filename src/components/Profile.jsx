@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
+import { AuthContext } from '@/contexts/AuthProvider';
+import useAdmin from '@/hooks/useAdmin';
 import { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthProvider';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-function Profile({user}) {
+function Profile({ user }) {
   const { logout } = useContext(AuthContext);
-  // const location = useLocation()
   const navigate = useNavigate();
+  const [isAdmin] = useAdmin();
 
   const handleLogout = () => {
     logout()
@@ -40,17 +41,21 @@ function Profile({user}) {
           <ul className='menu p-4 w-80 min-h-full bg-base-200 text-base-content'>
             {/* Sidebar content here */}
             <li>
-              <a href='/update-profile'>Profile</a>
+              <Link to={'/update-profile'}>Profile</Link>
             </li>
+            {!isAdmin && (
+              <li>
+                <Link to={'/order-page'}>Order</Link>
+              </li>
+            )}
             <li>
-              <a>Order</a>
+              <Link to={'/'}>Settings</Link>
             </li>
-            <li>
-              <a>settings</a>
-            </li>
-            <li>
-              <a href='/dashboard'>Dashboard</a>
-            </li>
+            {isAdmin && (
+              <li>
+                <Link to={'/dashboard'}>Dashboard</Link>
+              </li>
+            )}
             <li>
               <a onClick={handleLogout}>Logout</a>
             </li>

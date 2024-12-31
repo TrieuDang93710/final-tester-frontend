@@ -1,21 +1,49 @@
-import useMenu from "../../../hooks/useMenu";
-import { Link } from "react-router-dom";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import Swal from 'sweetalert2';
+import useMenu from '@/hooks/useMenu';
+import useAxiosSecure from '@/hooks/useAxiosSecure';
 
 function ManagerItems() {
-  const [menu] = useMenu();
+  const [menu, refetch] = useMenu();
+  const axiosSecure = useAxiosSecure();
+
+  const handleDeleteItem = (item) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await axiosSecure.delete(`/menu/${item._id}`);
+        // console.log(res);
+        if (res) {
+          refetch();
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'Your file has been deleted.',
+            icon: 'success'
+          });
+        }
+      }
+    });
+  };
 
   return (
-    <div className="w-full md:w-[870px] px-4 mx-auto">
-      <h2 className="text-2xl font-semibold my-4">
-        Manage All <span className="text-green">Menu Items</span>
+    <div className='w-full md:w-[870px] px-4 mx-auto'>
+      <h2 className='text-2xl font-semibold my-4'>
+        Manage All <span className='text-green'>Menu Items</span>
       </h2>
       {/* menu item table */}
       <div>
-        <div className="overflow-x-auto">
-          <table className="table">
+        <div className='overflow-x-auto'>
+          <table className='table'>
             {/* head */}
-            <thead className="bg-green text-white font-medium my-3">
+            <thead className='bg-green text-white font-medium my-3'>
               <tr>
                 <th>#</th>
                 <th>Image</th>
@@ -26,44 +54,42 @@ function ManagerItems() {
               </tr>
             </thead>
             <tbody>
-              {menu.map((item, index) => (
-                <tr key={index}>
-                  <th>{index + 1}</th>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle w-12 h-12">
-                          <img src={item.image} alt="" />
+              {menu.length !== 0
+                ? menu.map((item, index) => (
+                    <tr key={index}>
+                      <th>{index + 1}</th>
+                      <td>
+                        <div className='flex items-center gap-3'>
+                          <div className='avatar'>
+                            <div className='mask mask-squircle w-12 h-12'>
+                              <img src={item.image} alt='' />
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>{item.name}</td>
-                  <td>${item.price}</td>
-                  <td>
-                    <Link to={`/dashboard/update-menu/${item._id}`}>
-                      <button className="btn btn-ghost btn-xs bg-orange-500 text-white">
-                        <FaEdit />
-                      </button>
-                    </Link>
-                  </td>
-                  <td>
-                    <button
-                      // onClick={() => handleDeleteItem(item)}
-                      className="btn btn-ghost btn-xs text-red"
-                    >
-                      <FaTrashAlt />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-              {/* row 1 */}
+                      </td>
+                      <td>{item.name}</td>
+                      <td>${item.price}</td>
+                      <td>
+                        <Link to={`/dashboard/update-menu/${item._id}`}>
+                          <button className='btn btn-ghost btn-xs bg-orange-500 text-white'>
+                            <FaEdit />
+                          </button>
+                        </Link>
+                      </td>
+                      <td>
+                        <button onClick={() => handleDeleteItem(item)} className='btn btn-ghost btn-xs text-red'>
+                          <FaTrashAlt />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                : 'Not found menu'}
             </tbody>
           </table>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default ManagerItems
+export default ManagerItems;

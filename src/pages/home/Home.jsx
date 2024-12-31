@@ -1,19 +1,20 @@
-import Banner from '../../components/Banner'
-import Categories from './Categories'
-import OurServices from './OurServices'
-import SpecailDishes from './SpecailDishes'
-import Testimonials from './Testimonials'
+
+import Banner from '@/components/Banner';
+import Categories from './Categories';
+import OurServices from './OurServices';
+import SpecialDishes from './SpecailDishes';
+import Testimonials from './Testimonials';
 
 function Home() {
   return (
     <main>
       <Banner />
       <Categories />
-      <SpecailDishes />
+      <SpecialDishes />
       <Testimonials />
       <OurServices />
     </main>
-  )
+  );
 }
 
-export default Home
+export default Home;

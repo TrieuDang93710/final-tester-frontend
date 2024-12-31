@@ -1,5 +1,5 @@
 // import bannerImg from '/images/home/banner.png';
-import chef_banner from '/images/home/chef_banner.png'
+import chef_banner from '/images/home/chef_banner.png';
 
 function Banner() {
   return (

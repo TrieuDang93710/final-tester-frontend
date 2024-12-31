@@ -1,6 +1,6 @@
+import Card from '@/components/Card';
 import { useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
-import Card from '../../components/Card';
 
 function Menu() {
   const [menu, setMenu] = useState([]);
@@ -12,7 +12,7 @@ function Menu() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = 'http://localhost:8080/menu';
+      const url = `${import.meta.env.VITE_URL_API_ON_LOCAL}/menu`;
       const json = '/menu.json';
       try {
         const response = await fetch(url || json);
@@ -78,10 +78,8 @@ function Menu() {
 
   return (
     <div>
-      {/** menu banner */}
       <div className='max-w-screen-2xl container mx-auto xl:px-24 px-4 bg-gradient-to-r from-0% from-[#FAFAFA] to-[#FCFCFC] to-100%'>
         <div className='py-48 flex flex-col items-center justify-center'>
-          {/* content */}
           <div className=' text-center px-4 space-y-7'>
             <h2 className='md:text-5xl text-4xl font-bold md:leading-snug leading-snug'>
               For the Love of Delicious <span className='text-green'>Food</span>
@@ -94,10 +92,8 @@ function Menu() {
           </div>
         </div>
       </div>
-      {/** menu shop */}
       <div className='section-container'>
         <div className='flex flex-col md:flex-row flex-wrap md:justify-between items-center space-y-3 mb-8'>
-          {/* all category buttons */}
           <div className='flex flex-row justify-start md:items-center md:gap-8 gap-4  flex-wrap'>
             <button onClick={showAll} className={selectedCategory === 'all' ? 'active' : ''}>
               All
@@ -118,7 +114,6 @@ function Menu() {
               Drinks
             </button>
           </div>
-          {/* filter options */}
           <div className='flex justify-end mb-4 rounded-sm'>
             <div className='bg-black p-2 '>
               <FaFilter className='text-white h-4 w-4' />
@@ -136,15 +131,13 @@ function Menu() {
               <option value='high-to-low'>High to Low</option>
             </select>
           </div>
-          {/* product card */}
           <div className='grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4'>
-            {currentItems.map((item) => (
-              <Card key={item._id} item={item} />
-            ))}
+            {currentItems.length !== 0
+              ? currentItems.map((item) => <Card key={item._id} item={item} />)
+              : 'Not found menu'}
           </div>
         </div>
       </div>
-      {/* Pagination */}
       <div className='flex justify-center my-8'>
         {Array.from({ length: Math.ceil(filteredItems.length / itemsPerPage) }).map((_, index) => (
           <button
