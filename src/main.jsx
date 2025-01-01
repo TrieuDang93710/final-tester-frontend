@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import AuthProvider from './contexts/AuthProvider.jsx'
 import './index.css'
+import './App.css'
 import router from './router/Root.jsx'
 
 /** tanstack query */
