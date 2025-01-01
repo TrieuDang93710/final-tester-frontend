@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthProvider';
+import { AuthContext } from '@/contexts/AuthProvider';
 
 const axiosSecure = axios.create({
-  baseURL: 'http://localhost:8080'
+  baseURL: import.meta.env.VITE_URL_API_ON_LOCAL
 });
 
 const useAxiosSecure = () => {

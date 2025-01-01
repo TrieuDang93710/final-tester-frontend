@@ -3,8 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaFacebookF, FaGithub, FaGoogle } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import {} from 'axios';
-import useAxiosPublic from '../../hooks/useAxiosPublic';
-import { AuthContext } from '../../contexts/AuthProvider';
+import { AuthContext } from '@/contexts/AuthProvider';
+import useAxiosPublic from '@/hooks/useAxiosPublic';
 
 const SignIn = () => {
   const [errorMessage, seterrorMessage] = useState('');

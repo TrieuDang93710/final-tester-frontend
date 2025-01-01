@@ -2,8 +2,8 @@ import { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaFacebookF, FaGithub, FaGoogle } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
-import { AuthContext } from '../contexts/AuthProvider';
 import axios from 'axios';
+import { AuthContext } from '@/contexts/AuthProvider';
 
 const Modal = () => {
   const [errorMessage, seterrorMessage] = useState('');
@@ -14,36 +14,32 @@ const Modal = () => {
 
   const from = location.state?.from?.pathname || '/';
 
-  //react hook form
-  const {
-    register,
-    handleSubmit,
-    reset  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
     login(email, password)
-      .then((result) => {
-        // Signed in
-        const user = result.user;
+      .then(() => {
         const userInfor = {
           name: data.name,
           email: data.email
         };
-        axios.post('http://localhost:8080/user', userInfor).then((response) => {
-          console.log(response);
-          alert('Signin successful!');
-          navigate(from, { replace: true });
-        }).catch((error)=>{
-          seterrorMessage(error)
-          alert(errorMessage)
-        });
+        axios
+          .post(`${import.meta.env.VITE_URL_API_ON_LOCAL}/user`, userInfor)
+          .then((response) => {
+            console.log(response);
+            alert('Signin successful!');
+            navigate(from, { replace: true });
+          })
+          .catch((error) => {
+            seterrorMessage(error);
+            alert(errorMessage);
+          });
       })
       .catch((error) => {
         const errorMessage = error.message;
-        // seterrorMessage('Please provide valid email & password!');
-        // seterrorMessage(errorMessage)
+        seterrorMessage(errorMessage);
       });
     reset();
   };
@@ -52,12 +48,11 @@ const Modal = () => {
   const handleRegister = () => {
     signUpWithGmail()
       .then((result) => {
-        const user = result.user;
         const userInfor = {
           name: result?.user?.displayName,
           email: result?.user?.email
         };
-        axios.post('http://localhost:8080/user', userInfor).then((response) => {
+        axios.post(`${import.meta.env.VITE_URL_API_ON_LOCAL}/user`, userInfor).then((response) => {
           console.log(response);
           alert('Signin successful!');
           navigate('/');

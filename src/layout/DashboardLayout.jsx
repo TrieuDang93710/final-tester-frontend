@@ -12,10 +12,10 @@ import {
 import { FaCartShopping } from 'react-icons/fa6';
 
 import logo from '/logo.png';
-import useAdmin from '../hooks/useAdmin';
 import { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthProvider';
-import SignIn from '../pages/register/SignIn';
+import { AuthContext } from '@/contexts/AuthProvider';
+import useAdmin from '@/hooks/useAdmin';
+import SignIn from '@/pages/register/SignIn';
 
 const sharedLinks = (
   <>
@@ -79,7 +79,7 @@ function DashboardLayout() {
                 </Link>
               </li>
               <li>
-                <Link to='/dashboard'>
+                <Link to='/dashboard/manager-orders'>
                   <FaShoppingBag /> Manage Bookings
                 </Link>
               </li>
