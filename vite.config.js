@@ -7,6 +7,19 @@ config();
 
 export default defineConfig({
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Split vendor
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        }
+      }
+    },
+    chunkSizeWarningLimit: 600
+  },
   server: {
     host: true,
     strictPort: true,
