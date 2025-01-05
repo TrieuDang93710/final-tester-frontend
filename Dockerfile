@@ -16,7 +16,7 @@ COPY . .
 RUN npm run build
 
 # # Expose port 80
-EXPOSE 3000
+EXPOSE 4000
 
 # Start Nginx
 # CMD ["nginx", "-g", "daemon off;"]
