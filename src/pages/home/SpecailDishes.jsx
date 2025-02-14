@@ -9,12 +9,14 @@ import Card from '@/components/Card';
 function SpecailDishes() {
   const [recipes, setRecipes] = useState([]);
   const slider = useRef(null);
+  // const url = `${import.meta.env.VITE_URL_API_ON_LOCAL}/menu`;
+  const json = '/menu.json';
   useEffect(() => {
-    fetch('/menu.json')
+    fetch(json)
       .then((res) => res.json())
       .then((data) => {
         const specials = data.filter((item) => item.category === 'popular');
-        // console.log(specials)
+        console.log(specials)
         setRecipes(specials);
       });
   }, []);
