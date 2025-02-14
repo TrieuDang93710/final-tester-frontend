@@ -19,5 +19,4 @@ RUN npm run build
 EXPOSE 4000
 
 # Start Nginx
-# CMD ["nginx", "-g", "daemon off;"]
 CMD ["npm", "run", "dev"]
